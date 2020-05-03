@@ -4,6 +4,7 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.GregorianCalendar;
 import java.util.List;
 
 import javax.imageio.ImageIO;
@@ -42,9 +43,29 @@ public class ImageDAO {
 		return images;
 	}
 	
+	public BufferedImage findFirst(){
+		File database = new File("C:\\Users\\Alison\\eclipse-workspace\\MPR\\database");
+		
+		if (database != null) {
+			File[] listFiles = database.listFiles();
+			
+			if (listFiles != null) {
+				for (File file : listFiles) {
+					try {
+						return ImageIO.read(file);
+					} catch (IOException e) {
+						e.printStackTrace();
+					}
+				}
+			}
+		}
+		
+		return null;
+	}
+	
 	public void save(BufferedImage image, String type) {
         try {
-            ImageIO.write(image, "jpg", new File("C:\\Users\\Alison\\eclipse-workspace\\MPR\\results\\"+type+".jpg"));
+            ImageIO.write(image, "jpg", new File("C:\\Users\\Alison\\eclipse-workspace\\MPR\\results\\"+type+"_"+GregorianCalendar.getInstance().getTimeInMillis()+".jpg"));
         } catch (IOException e) {
         	e.printStackTrace();
         }
